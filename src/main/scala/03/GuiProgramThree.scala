@@ -18,7 +18,7 @@ class SampleUI3 extends MainFrame {
     // 線を入れる
     // border = Swing.BeveledBorder(Swing.Raised)
     // 線を入れる
-    border = Swing.MatteBorder(10, 10, 10, 10, java.awt.Color.WHITE)
+    border = Swing.MatteBorder(10, 10, 10, 10, java.awt.Color.GREEN)
   }
 
 
