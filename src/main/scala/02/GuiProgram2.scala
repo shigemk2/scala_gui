@@ -7,7 +7,7 @@ class SampleUI2 extends MainFrame {
   contents = Button("Press me, please") { println("Thank you") }
 }
 
-object GuiProgramTwo {
+object GuiProgram2 {
   def main(args: Array[String]) {
     val ui = new SampleUI2
     // visibleメンバのデフォルトはfalseっぽい

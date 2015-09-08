@@ -40,7 +40,7 @@ class SampleUI3 extends MainFrame {
   // contents = box
 }
 
-object GuiProgramThree {
+object GuiProgram3 {
   def main(args: Array[String]) {
     val ui = new SampleUI3
     ui.visible = true

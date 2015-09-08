@@ -14,7 +14,7 @@ class SampleUI1 extends MainFrame {
   contents = new Label("Here is the contents!")
 }
 
-object GuiProgramOne {
+object GuiProgram1 {
   def main(args: Array[String]) {
     val ui = new SampleUI1
     // ウィンドウを表示させるかどうかを決めるメンバ
