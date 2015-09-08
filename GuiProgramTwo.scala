@@ -10,6 +10,7 @@ class SampleUI extends MainFrame {
 object GuiProgramTwo {
   def main(args: Array[String]) {
     val ui = new SampleUI
+    // visibleメンバのデフォルトはfalseっぽい
     ui.visible = true
   }
 }
