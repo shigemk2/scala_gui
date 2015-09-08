@@ -1,6 +1,6 @@
 import scala.swing._
 
-class SampleUI extends MainFrame {
+class SampleUI2 extends MainFrame {
   title = "GUI Program #2"
   preferredSize = new Dimension(320, 240)
   // Buttonの中身はボタンがクリックされて初めて呼ばれる
@@ -9,7 +9,7 @@ class SampleUI extends MainFrame {
 
 object GuiProgramTwo {
   def main(args: Array[String]) {
-    val ui = new SampleUI
+    val ui = new SampleUI2
     // visibleメンバのデフォルトはfalseっぽい
     ui.visible = true
   }
