@@ -27,6 +27,7 @@ class SampleUI4 extends MainFrame {
 
   def changeText() {
     val r = Dialog.showInput(contents.head, "New label text", initial=la.text)
+    // showInputの値はOption[String]
     r match {
       case Some(s) => la.text = s
       case None =>
