@@ -21,6 +21,7 @@ class SampleUI4 extends MainFrame {
   }
 
   def pressMe() {
+    // Dialog.showMessageでダイアログを出す
     Dialog.showMessage(contents.head, "Thank you!", title="You pressed me")
   }
 
@@ -33,11 +34,13 @@ class SampleUI4 extends MainFrame {
   }
 
   def closeMe() {
+    // Dialog.showConfirmationでなんか聞く
     val res = Dialog.showConfirmation(contents.head,
       "Do you really want to quit?",
       optionType=Dialog.Options.YesNo,
       title=title)
 
+    // 上のresでDialog.Result.Okがおーけー
     if (res == Dialog.Result.Ok)
       sys.exit(0)
   }
