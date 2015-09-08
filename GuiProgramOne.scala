@@ -1,3 +1,4 @@
+// ウィンドウを作成する
 // GUIプログラミングのおまじない
 import scala.swing._
 
