@@ -41,6 +41,8 @@ class SampleUI4 extends MainFrame {
       title=title)
 
     // 上のresでDialog.Result.Okがおーけー
+    // Dialog.Result.Yesでもいい
+    println(res)
     if (res == Dialog.Result.Ok)
       sys.exit(0)
   }
