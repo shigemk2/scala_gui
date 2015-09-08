@@ -9,10 +9,12 @@ class SampleUI3 extends MainFrame {
   contents = new BoxPanel(Orientation.Vertical) {
   // contents = new BoxPanel(Orientation.Horizontal) {
     contents += new Label("Look at me!")
+    contents += Swing.VStrut(10)
+    contents += Swing.Glue
     contents += Button("Press me, please") { println("Thank you") }
     contents += Button("Close") { sys.exit(0) }
     // margin
-    // border = Swing.EmptyBorder(10, 10, 10, 10)
+    border = Swing.EmptyBorder(10, 10, 10, 10)
     // 線を入れる
     // border = Swing.BeveledBorder(Swing.Lowered)
     // 線を入れる
@@ -24,8 +26,8 @@ class SampleUI3 extends MainFrame {
     // 線を入れる
     // border = Swing.TitledBorder(Swing.EtchedBorder(Swing.Lowered), "Hoge")
     // 線を入れる
-    border = Swing.CompoundBorder(Swing.BeveledBorder(Swing.Lowered),
-      Swing.EmptyBorder(10, 10, 10, 10))
+    // border = Swing.CompoundBorder(Swing.BeveledBorder(Swing.Lowered),
+    //   Swing.EmptyBorder(10, 10, 10, 10))
   }
 
 
