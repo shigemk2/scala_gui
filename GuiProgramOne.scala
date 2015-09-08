@@ -1,7 +1,9 @@
 // GUIプログラミングのおまじない
 import scala.swing._
 
-class UI extends MainFrame {
+// MainFrameを継承してメンバーを変更しているので、
+// クラス名は何でもいい
+class SampleUI extends MainFrame {
   // タイトル
   title = "GUI Program #1"
 
@@ -13,7 +15,7 @@ class UI extends MainFrame {
 
 object GuiProgramOne {
   def main(args: Array[String]) {
-    val ui = new UI
+    val ui = new SampleUI
     // ウィンドウを表示させるかどうかを決めるメンバ
     ui.visible = true
     // ログっぽいやつ これが出ても終了しない
