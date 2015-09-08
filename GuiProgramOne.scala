@@ -5,7 +5,9 @@ class UI extends MainFrame {
   // タイトル
   title = "GUI Program #1"
 
+  // ウィンドウサイズ
   preferredSize = new Dimension(320, 240)
+  // ウィンドウの中身
   contents = new Label("Here is the contents!")
 }
 
