@@ -4,7 +4,9 @@ class SampleUI3 extends MainFrame {
   title = "GUI Program #3"
   // 複数のコンポーネントをウィンドウに入れたい場合は、
   // scala.swing.BoxPanelを使う
-  contents = new BoxPanel(Orientation.Vertical) {
+  // contents = new BoxPanel(Orientation.Vertical) {
+  // Orientation.Horizonalを使うと、コンポーネントを横並びに出来る
+  contents = new BoxPanel(Orientation.Horizontal) {
     contents += new Label("Look at me!")
     contents += Button("Press me, please") { println("Thank you") }
     contents += Button("Close") { sys.exit(0) }
