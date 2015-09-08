@@ -12,6 +12,7 @@ class SampleUI3 extends MainFrame {
     contents += Swing.VStrut(10)
     contents += Swing.Glue
     contents += Button("Press me, please") { println("Thank you") }
+    contents += Swing.VStrut(10)
     contents += Button("Close") { sys.exit(0) }
     // margin
     border = Swing.EmptyBorder(10, 10, 10, 10)
