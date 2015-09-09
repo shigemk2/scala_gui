@@ -1,11 +1,13 @@
 import scala.swing._
 import scala.swing.event._
 
+// SolverとUIで、ロジック部分とインターフェイス部分を分離する
 class Solver {
   // ファイル読み込み
   // sbtのディレクトリ構造だと"words.txt"だとプロジェクトのホームディレクトリのファイルを読み込もうとする
   private val words = scala.io.Source.fromFile("data/words.txt").getLines().toSet
 
+  // 文字列判定
   private def matches(pattern: String, word: String): Boolean = {
     if (word.length != pattern.length)
       return false
@@ -18,6 +20,7 @@ class Solver {
     true
   }
 
+  // varを使うのはイケてない
   def findWords(pattern: String): List[String] = {
     var w = List[String]()
     for (e <- words) {
@@ -47,12 +50,13 @@ class CrossWordUI(val solver: Solver) extends MainFrame {
     rows = 10
     lineWrap = true
     wordWrap = true
-    editable = false
+    editable = false // readonly属性
   }
 
   // make sure that resizing only changes the resultField:
   restrictHeight(searchLine)
 
+  // 実際にウィンドウにコンテンツをのせるのはココ
   contents = new BoxPanel(Orientation.Vertical) {
     contents += searchLine
     contents += Swing.VStrut(10)
@@ -60,6 +64,7 @@ class CrossWordUI(val solver: Solver) extends MainFrame {
     border = Swing.EmptyBorder(10, 10, 10, 10)
   }
 
+  // クリックボタンを押すなどしたらイベントが発火する(searchNow呼び出し)
   listenTo(searchField)
   listenTo(searchButton)
   reactions += {
