@@ -73,6 +73,7 @@ class SampleUI6 extends MainFrame {
 
   // reactionsで受け取ったイベントから何をするかを決める
   reactions += {
+    // バッククオートで囲む
     case EditDone(`nameField`) =>
       println("Your name is now: " + nameField.text)
     case EditDone(`commentField`) =>
