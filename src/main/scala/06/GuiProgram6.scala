@@ -61,6 +61,7 @@ class SampleUI6 extends MainFrame {
     border = Swing.EmptyBorder(10, 10, 10, 10)
   }
 
+  // listenToでどのイベントを受け取るか決める
   listenTo(nameField)
   listenTo(commentField)
   listenTo(gender.selection)
@@ -70,6 +71,7 @@ class SampleUI6 extends MainFrame {
   listenTo(status3)
   listenTo(pressMe)
 
+  // reactionsで受け取ったイベントから何をするかを決める
   reactions += {
     case EditDone(`nameField`) =>
       println("Your name is now: " + nameField.text)
