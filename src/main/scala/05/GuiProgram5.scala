@@ -63,7 +63,7 @@ class SampleUI5 extends MainFrame {
       contents += Button("Close") { reportAndClose() }
     }
     for (e <- contents)
-      e.xLayoutAlignment = 0.0
+      e.xLayoutAlignment = 0.0 // This ensures that they are all aligned at the left edge
     border = Swing.EmptyBorder(10, 10, 10, 10)
   }
 
