@@ -2,7 +2,9 @@ import scala.swing._
 import scala.swing.event._
 
 class Solver {
-  private val words = scala.io.Source.fromFile("./words.txt").getLines().toSet
+  // ファイル読み込み
+  // sbtのディレクトリ構造だと"words.txt"だとプロジェクトのホームディレクトリのファイルを読み込もうとする
+  private val words = scala.io.Source.fromFile("data/words.txt").getLines().toSet
 
   private def matches(pattern: String, word: String): Boolean = {
     if (word.length != pattern.length)
