@@ -78,7 +78,7 @@ class TicTacToeUI1(val board: Board) extends MainFrame {
   // make sure that resizing only changes the TicTacToeDisplay
   restrictHeight(buttonLine)
 
-  contents = new BoxPanel(Orientation.Horizontal) {
+  contents = new BoxPanel(Orientation.Vertical) {
     contents += canvas
     contents += Swing.VStrut(10)
     contents += buttonLine
