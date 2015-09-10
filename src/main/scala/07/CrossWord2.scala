@@ -50,7 +50,7 @@ class CrossWordUI2(val solver: Solver2) extends MainFrame {
     editable = false
   }
   val dict = new ComboBox(List("Scrabble words", "All words"))
-  val largeFont = Button("+") { fontChange(+1) }
+  val largerFont = Button("+") { fontChange(+1) }
   val smallerFont = Button("-") { fontChange(-1) }
   var fontSize = 12
   fontChange(0)
@@ -66,7 +66,7 @@ class CrossWordUI2(val solver: Solver2) extends MainFrame {
     contents += new BoxPanel(Orientation.Horizontal) {
       contents += dict
       contents += Swing.HStrut(10)
-      contents += largeFont
+      contents += largerFont
       contents += Swing.HStrut(10)
       contents += smallerFont
     }
@@ -89,6 +89,8 @@ class CrossWordUI2(val solver: Solver2) extends MainFrame {
     val pattern = searchField.text.toLowerCase
     val words = solver.findWords(pattern, dict.selection.index)
     if (words.length == 0) {
+      resultField.text = "\n\nSorry, no words found."
+    } else {
       resultField.text = words.sorted mkString "\n"
       resultField.caret.position = 0
     }
