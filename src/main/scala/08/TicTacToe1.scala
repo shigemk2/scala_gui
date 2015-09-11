@@ -6,29 +6,66 @@ import java.awt.geom._
 // --------------------------------------------------------------------
 
 class Board {
-  private val grid = Array(
-    0, 1, 2,
-    0, 1, 0,
-    0, 2, 0
-  )
+  private var player = 1
+  private val grid = Array(0, 0, 0,
+    0, 0, 0,
+    0, 0, 0)
+
   def apply(x: Int, y: Int): Int = grid(3 * y + x)
+  def currentPlayer: Int = player
+  def play(x: Int, y: Int) {
+    if (this(x, y) == 0) {
+      grid(3 * y + x) = player
+      player = 3 - player
+    }
+  }
+  def restart() {
+    for (i <- 0 until 9)
+      grid(i) = 0
+    player = 1
+  }
 }
+
+// --------------------------------------------------------------------
+
+case class TicTacToeEvent(x: Int, y: Int) extends Event
 
 // --------------------------------------------------------------------
 
 class Canvas(val board: Board) extends Component {
   preferredSize = new Dimension(320, 320)
 
-  override def paintComponent(g: Graphics2D) {
+  listenTo(mouse.clicks)
+  reactions += {
+    case MouseClicked(_, p, _, _, _) => mouseClick(p.x, p.y)
+  }
+
+  // returns squareSide, x0, y0, wid
+  private def squareGeometry: (Int, Int, Int, Int) = {
     val d = size
-    g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
-      java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
-    g.setColor(Color.WHITE)
-    g.fillRect(0, 0, d.width, d.height)
     val squareSide = d.height min d.width
-    val wid = squareSide / 3
     val x0 = (d.width - squareSide)/2
     val y0 = (d.height - squareSide)/2
+    (squareSide, x0, y0, squareSide/3)
+  }
+
+  private def mouseClick(x: Int, y: Int) {
+    val (squareSide, x0, y0, wid) = squareGeometry
+    if (x0 <= x && x < x0 + squareSide &&
+      y0 <= y && y < y0 + squareSide) {
+      val col = (x - x0) / wid
+      val row = (y - y0) / wid
+      publish(TicTacToeEvent(col, row))
+    }
+  }
+
+  override def paintComponent(g : Graphics2D) {
+    g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
+      java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
+    g.setColor(Color.WHITE);
+    val d = size
+    g.fillRect(0,0, d.width, d.height)
+    val (squareSide, x0, y0, wid) = squareGeometry
     g.setColor(Color.BLACK)
     // vertical lines
     for (x <- 1 to 2)
@@ -59,18 +96,22 @@ class Canvas(val board: Board) extends Component {
 
 // --------------------------------------------------------------------
 
-class TicTacToeUI1(val board: Board) extends MainFrame {
+class UI(val board: Board) extends MainFrame {
   private def restrictHeight(s: Component) {
     s.maximumSize = new Dimension(Short.MaxValue, s.preferredSize.height)
   }
 
-  title = "Tic Tac Toe #1"
+  title = "Tic Tac Toe #3"
 
   val canvas = new Canvas(board)
   val newGameButton = Button("New Game") { newGame() }
+  val turnLabel = new Label("Player 1's turn")
+  turnLabel.foreground = Color.BLUE
   val quitButton = Button("Quit") { sys.exit(0) }
   val buttonLine = new BoxPanel(Orientation.Horizontal) {
     contents += newGameButton
+    contents += Swing.HGlue
+    contents += turnLabel
     contents += Swing.HGlue
     contents += quitButton
   }
@@ -85,15 +126,28 @@ class TicTacToeUI1(val board: Board) extends MainFrame {
     border = Swing.EmptyBorder(10, 10, 10, 10)
   }
 
+  listenTo(canvas)
+  reactions += {
+    case TicTacToeEvent(x, y) =>
+      board.play(x, y)
+      updateLabelAndBoard()
+  }
+
+  def updateLabelAndBoard() {
+    turnLabel.text = "Player %d's turn".format(board.currentPlayer)
+    canvas.repaint()
+  }
+
   def newGame() {
-    println("New Game!")
+    board.restart()
+    updateLabelAndBoard()
   }
 }
 
-object TicTacToe1 {
+object TicTacToeThree {
   def main(args: Array[String]) {
     val board = new Board
-    val ui = new TicTacToeUI1(board)
+    val ui = new UI(board)
     ui.visible = true
   }
 }
