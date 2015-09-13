@@ -8,8 +8,8 @@ import java.awt.geom._
 class Board {
   private var player = 1
   private val grid = Array(0, 0, 0,
-    0, 0, 0,
-    0, 0, 0)
+			   0, 0, 0,
+			   0, 0, 0)
 
   def apply(x: Int, y: Int): Int = grid(3 * y + x)
   def currentPlayer: Int = player
@@ -35,9 +35,16 @@ case class TicTacToeEvent(x: Int, y: Int) extends Event
 class Canvas(val board: Board) extends Component {
   preferredSize = new Dimension(320, 320)
 
+  focusable = true
   listenTo(mouse.clicks)
+  listenTo(keys)
   reactions += {
     case MouseClicked(_, p, _, _, _) => mouseClick(p.x, p.y)
+    case KeyTyped(_, c, _, _) => 
+      if ('1' <= c && c <= '9') {
+	val idx = c - '1'
+	publish(TicTacToeEvent(idx % 3, idx / 3))
+      }
   }
 
   // returns squareSide, x0, y0, wid
@@ -52,16 +59,16 @@ class Canvas(val board: Board) extends Component {
   private def mouseClick(x: Int, y: Int) {
     val (squareSide, x0, y0, wid) = squareGeometry
     if (x0 <= x && x < x0 + squareSide &&
-      y0 <= y && y < y0 + squareSide) {
+	y0 <= y && y < y0 + squareSide) {
       val col = (x - x0) / wid
       val row = (y - y0) / wid
       publish(TicTacToeEvent(col, row))
     }
   }
-
+    
   override def paintComponent(g : Graphics2D) {
-    g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
-      java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
+    g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, 
+		       java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
     g.setColor(Color.WHITE);
     val d = size
     g.fillRect(0,0, d.width, d.height)
@@ -76,19 +83,19 @@ class Canvas(val board: Board) extends Component {
     g.setStroke(new BasicStroke(3f))
     for (x <- 0 until 3) {
       for (y <- 0 until 3) {
-        board(x, y) match {
-          case 1 =>
-            g.setColor(Color.RED)
-            g.draw(new Ellipse2D.Double(x0 + x * wid + 10, y0 + y * wid + 10,
-              wid - 20, wid - 20))
-          case 2 =>
-            g.setColor(new Color(0, 160, 0))
-            val x1 = x0 + x * wid + 10
-            val y1 = y0 + y * wid + 10
-            g.draw(new Line2D.Double(x1, y1, x1 + wid - 20, y1 + wid - 20))
-            g.draw(new Line2D.Double(x1, y1 + wid - 20, x1 + wid - 20, y1))
-          case _ => // draw nothing
-        }
+	board(x, y) match {
+	  case 1 =>
+	    g.setColor(Color.RED)
+	    g.draw(new Ellipse2D.Double(x0 + x * wid + 10, y0 + y * wid + 10, 
+					wid - 20, wid - 20))
+	  case 2 =>
+	    g.setColor(new Color(0, 160, 0))
+	    val x1 = x0 + x * wid + 10
+	    val y1 = y0 + y * wid + 10
+	    g.draw(new Line2D.Double(x1, y1, x1 + wid - 20, y1 + wid - 20))
+	    g.draw(new Line2D.Double(x1, y1 + wid - 20, x1 + wid - 20, y1))
+	  case _ => // draw nothing
+	}
       }
     }
   }
@@ -101,7 +108,7 @@ class UI(val board: Board) extends MainFrame {
     s.maximumSize = new Dimension(Short.MaxValue, s.preferredSize.height)
   }
 
-  title = "Tic Tac Toe #3"
+  title = "Tic Tac Toe #4"
 
   val canvas = new Canvas(board)
   val newGameButton = Button("New Game") { newGame() }
@@ -118,7 +125,7 @@ class UI(val board: Board) extends MainFrame {
 
   // make sure that resizing only changes the TicTacToeDisplay
   restrictHeight(buttonLine)
-
+  
   contents = new BoxPanel(Orientation.Vertical) {
     contents += canvas
     contents += Swing.VStrut(10)
@@ -128,7 +135,7 @@ class UI(val board: Board) extends MainFrame {
 
   listenTo(canvas)
   reactions += {
-    case TicTacToeEvent(x, y) =>
+    case TicTacToeEvent(x, y) => 
       board.play(x, y)
       updateLabelAndBoard()
   }
@@ -144,7 +151,7 @@ class UI(val board: Board) extends MainFrame {
   }
 }
 
-object TicTacToeThree {
+object TicTacToeFour {
   def main(args: Array[String]) {
     val board = new Board
     val ui = new UI(board)
